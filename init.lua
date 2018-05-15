@@ -9,6 +9,8 @@ if minetest.get_modpath("unified_inventory") then
 	dofile(modpath .. "/gui_unified_inventory.lua")
 elseif minetest.get_modpath("sfinv") then
 	dofile(modpath .. "/gui_sfinv.lua")
+else
+	dofile(modpath .. "/gui_plain.lua")
 end
 
 upgrade_packs.register_pack("upgrade_packs:hp_10", "health", {
@@ -51,12 +53,11 @@ minetest.register_on_joinplayer(function(player)
 end)
 
 minetest.register_on_item_eat(function(hp_change, replace_with_item, itemstack, user)
-	print(dump(hp_change))
 	if hp_change == 0 then
 		return
 	end
 	-- Undo some of the wear when eating instead of dying
-	upgrade_packs.add_wear(user, "health", hp_change * -10)
+	upgrade_packs.add_wear(user, "health", hp_change * -2)
 end)
 
 minetest.register_on_player_hpchange(function(player, hp_change, reason)
@@ -71,7 +72,6 @@ minetest.register_on_player_hpchange(function(player, hp_change, reason)
 end, false)
 
 minetest.register_allow_player_inventory_action(function(player, action, inv, data)
-	print(dump(data))
 	if data.to_list ~= "ugpacks" then
 		return -- Not interesting for this mod
 	end

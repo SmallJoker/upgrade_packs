@@ -13,9 +13,9 @@ unified_inventory.register_page("ugpacks", {
 		local y = perplayer_formspec.formspec_y
 
 		return { formspec = (
-			"label[1,0;Upgrade Packs]"..
-			"list[current_player;ugpacks;1," ..(y + 1) .. ";2,2;]"..
-			"listring[current_player;main]"..
+			"label[3,0;Upgrade Packs]" ..
+			"list[current_player;ugpacks;3," .. (y + 1) .. ";2,2;]" ..
+			"listring[current_player;main]" ..
 			"listring[current_player;ugpacks]"
 		)}
 	end
