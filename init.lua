@@ -5,7 +5,8 @@ upgrade_packs.breath_items = {}
 local modpath = minetest.get_modpath("upgrade_packs")
 
 dofile(modpath .. "/api.lua")
-if minetest.get_modpath("unified_inventory") then
+if minetest.get_modpath("unified_inventory")
+		and not unified_inventory.sfinv_compat_layer then
 	dofile(modpath .. "/gui_unified_inventory.lua")
 elseif minetest.get_modpath("sfinv") then
 	dofile(modpath .. "/gui_sfinv.lua")
@@ -46,7 +47,8 @@ minetest.after(0, function()
 	upgrade_packs.breath_items = breath_items
 end)
 
-minetest.register_on_joinplayer(function(player)
+-- Hacky: Set the hp_max and breath_max value first
+table.insert(minetest.registered_on_joinplayers, 1, function(player)
 	local inv = player:get_inventory()
 	inv:set_size("ugpacks", 4)
 	upgrade_packs.update_player(player)
@@ -62,14 +64,16 @@ end)
 
 minetest.register_on_player_hpchange(function(player, hp_change, reason)
 	if hp_change >= 0 then
-		return
+		return hp_change
 	end
 	if reason == "drown" then
-		upgrade_packs.add_wear(player, "breath", 200)
+		upgrade_packs.add_wear(player, "breath", 400)
 	else
-		upgrade_packs.add_wear(player, "health", hp_change * -10)
+		upgrade_packs.add_wear(player, "health", hp_change * -25)
 	end
-end, false)
+
+	return hp_change
+end, true)
 
 minetest.register_allow_player_inventory_action(function(player, action, inv, data)
 	if data.to_list ~= "ugpacks" then
