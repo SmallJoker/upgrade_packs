@@ -1,3 +1,7 @@
+if not minetest.register_allow_player_inventory_action then
+	error("[upgrade_packs] This mod requires at least Minetest 5.0.0-dev")
+end
+
 upgrade_packs = {}
 upgrade_packs.health_items = {}
 upgrade_packs.breath_items = {}

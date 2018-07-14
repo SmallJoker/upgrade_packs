@@ -8,5 +8,9 @@ This server mod provides upgradeable packs in form of items to players which giv
 
 License: MIT
 
+Dependencies: default, vessels
+
+Optional dependencies: unified_inventory, sfinv
+
 ## Craft recipes
 1. Download and install a craft guide
