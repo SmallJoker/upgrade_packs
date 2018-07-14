@@ -1,3 +1,36 @@
+function upgrade_packs.meta_to_inv(player)
+	local meta = player:get_meta()
+	local inv = player:get_inventory()
+	local data = meta:get("upgrade_packs:ugpacks")
+
+	inv:set_size("ugpacks", 4)
+	if not data then
+		return -- List was empty or it's a new player
+	end
+
+	local list = minetest.deserialize(data)
+	if not list then
+		-- This should not happen at all
+		minetest.log("warning", "[upgrade_packs] Failed to deserialize "
+			.. "player meta of player " .. player:get_player_name())
+	else
+		inv:set_list("ugpacks", list)
+	end
+	meta:set_string("upgrade_packs:ugpacks", "")
+end
+
+-- Metadata cannot be accessed directly
+-- If this mod is disabled, the inventory list will be unavailable
+function upgrade_packs.inv_to_meta(player)
+	local meta = player:get_meta()
+	local inv = player:get_inventory()
+	local list = inv:get_list("ugpacks")
+	if list and not inv:is_empty("ugpacks") then
+		meta:set_string("upgrade_packs:ugpacks", minetest.serialize(list))
+	end
+	inv:set_size("ugpacks", 0)
+end
+
 function upgrade_packs.add_wear(player, pack, amount)
 	local lookup = upgrade_packs[pack .. "_items"]
 

@@ -5,6 +5,7 @@ upgrade_packs.breath_items = {}
 local modpath = minetest.get_modpath("upgrade_packs")
 
 dofile(modpath .. "/api.lua")
+dofile(modpath .. "/packs.lua")
 if minetest.get_modpath("unified_inventory")
 		and not unified_inventory.sfinv_compat_layer then
 	dofile(modpath .. "/gui_unified_inventory.lua")
@@ -14,17 +15,6 @@ else
 	dofile(modpath .. "/gui_plain.lua")
 end
 
-upgrade_packs.register_pack("upgrade_packs:hp_10", "health", {
-	description = "+10 HP",
-	strength = 10,
-	image = "heart.png"
-})
-
-upgrade_packs.register_pack("upgrade_packs:breath_5", "breath", {
-	description = "+5 Breath",
-	strength = 5,
-	image = "bubble.png"
-})
 
 -- Cache items which are interesting for this mod
 minetest.after(0, function()
@@ -49,10 +39,11 @@ end)
 
 -- Hacky: Set the hp_max and breath_max value first
 table.insert(minetest.registered_on_joinplayers, 1, function(player)
-	local inv = player:get_inventory()
-	inv:set_size("ugpacks", 4)
+	upgrade_packs.meta_to_inv(player)
 	upgrade_packs.update_player(player)
 end)
+
+minetest.register_on_leaveplayer(upgrade_packs.inv_to_meta)
 
 minetest.register_on_item_eat(function(hp_change, replace_with_item, itemstack, user)
 	if hp_change == 0 then
