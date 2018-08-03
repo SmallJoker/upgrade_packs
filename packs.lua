@@ -1,22 +1,25 @@
+local S = upgrade_packs.translator
+
 upgrade_packs.register_pack("upgrade_packs:hp_10", "health", {
-	description = "+10 HP",
+	description = S("+10 HP"),
 	strength = 10,
 	image = "heart.png"
 })
 
+local mc = "default:mese_crystal"
 local gb = "vessels:glass_bottle"
 local ci = "default:copper_ingot"
 minetest.register_craft({
 	output = "upgrade_packs:hp_10",
 	recipe = {
-		{ci, gb, ci},
-		{gb, "", gb},
-		{ci, gb, ci}
+		{ci, mc, ci},
+		{mc, gb, mc},
+		{ci, mc, ci}
 	}
 })
 
 upgrade_packs.register_pack("upgrade_packs:breath_5", "breath", {
-	description = "+5 Breath",
+	description = S("+5 Breath"),
 	strength = 5,
 	image = "bubble.png"
 })
@@ -26,9 +29,9 @@ local ti = "default:tin_ingot"
 minetest.register_craft({
 	output = "upgrade_packs:breath_5",
 	recipe = {
-		{ti, sb, ti},
-		{sb, "", sb},
-		{ti, sb, ti}
+		{ti, mc, ti},
+		{mc, sb, mc},
+		{ti, mc, ti}
 	}
 })
 

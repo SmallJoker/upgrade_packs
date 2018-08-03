@@ -5,6 +5,7 @@ end
 upgrade_packs = {}
 upgrade_packs.health_items = {}
 upgrade_packs.breath_items = {}
+upgrade_packs.translator = minetest.get_translator("upgrade_packs")
 
 local modpath = minetest.get_modpath("upgrade_packs")
 

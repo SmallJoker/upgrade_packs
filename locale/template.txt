@@ -1,0 +1,6 @@
+# textdomain: upgrade_packs
+
++10 HP =
++5 Breath =
+Allows inserting upgrade packs without CSM =
+Upgrade Packs =

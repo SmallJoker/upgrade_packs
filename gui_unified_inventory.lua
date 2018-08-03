@@ -1,7 +1,9 @@
+local S = upgrade_packs.translator
+
 unified_inventory.register_button("ugpacks", {
 	type = "image",
 	image = "heart.png",
-	tooltip = "Upgrade Packs"
+	tooltip = S("Upgrade Packs")
 })
 
 unified_inventory.register_page("ugpacks", {
@@ -11,7 +13,7 @@ unified_inventory.register_page("ugpacks", {
 		return { formspec = (
 			"no_prepend[]" ..
 			"listcolors[#888;#AAA;#111]" ..
-			"label[3," .. (y - 0.1) .. ";Upgrade Packs]" ..
+			"label[3," .. (y - 0.1) .. ";" .. S("Upgrade Packs") .. "]" ..
 			"list[current_player;ugpacks;3," .. (y + 0.7) .. ";2,2;]" ..
 			"list[current_player;main;0," .. (y + 3.5) .. ";8,4;]" ..
 			"listring[]"
