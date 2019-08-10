@@ -26,6 +26,9 @@ function upgrade_packs.inv_to_meta(player)
 	local inv = player:get_inventory()
 	local list = inv:get_list("ugpacks")
 	if list and not inv:is_empty("ugpacks") then
+		for i, v in ipairs(list) do
+			list[i] = v:to_table()
+		end
 		meta:set_string("upgrade_packs:ugpacks", minetest.serialize(list))
 	end
 	inv:set_size("ugpacks", 0)
