@@ -14,6 +14,9 @@ function upgrade_packs.meta_to_inv(player)
 		minetest.log("warning", "[upgrade_packs] Failed to deserialize "
 			.. "player meta of player " .. player:get_player_name())
 	else
+		for i, v in ipairs(list) do
+			list[i] = ItemStack(v)
+		end
 		inv:set_list("ugpacks", list)
 	end
 	meta:set_string("upgrade_packs:ugpacks", "")
