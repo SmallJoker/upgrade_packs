@@ -1,22 +1,24 @@
 local S = upgrade_packs.translator
+local ui = unified_inventory
 
-unified_inventory.register_button("ugpacks", {
+ui.register_button("ugpacks", {
 	type = "image",
 	image = "heart.png",
 	tooltip = S("Upgrade Packs")
 })
 
-unified_inventory.register_page("ugpacks", {
+ui.register_page("ugpacks", {
 	get_formspec = function(player, perplayer_formspec)
 		local y = perplayer_formspec.formspec_y
 
 		return { formspec = (
+			ui.style_full.standard_inv_bg ..
+			ui.make_inv_img_grid(3.9, (y+0.6), 2, 2, true) ..
 			"no_prepend[]" ..
-			"listcolors[#888;#AAA;#111]" ..
-			"label[3," .. (y - 0.1) .. ";" .. S("Upgrade Packs") .. "]" ..
-			"list[current_player;ugpacks;3," .. (y + 0.7) .. ";2,2;]" ..
-			"list[current_player;main;0," .. (y + 3.5) .. ";8,4;]" ..
-			"listring[]"
-		), draw_inventory = false}
+			"label["..ui.style_full.form_header_x..","..ui.style_full.form_header_y..";" .. S("Upgrade Packs") .. "]" ..
+			"list[current_player;ugpacks;4," .. (y + 0.7) .. ";2,2;]" ..
+			"listring[current_player;main]"..
+			"listring[current_player;ugpacks]"
+		), draw_inventory = true}
 	end
 })
