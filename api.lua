@@ -37,18 +37,27 @@ function upgrade_packs.inv_to_meta(player)
 	inv:set_size("ugpacks", 0)
 end
 
+-- Maximum wear: (2^16 - 1)
 function upgrade_packs.add_wear(player, pack, amount)
 	local lookup = upgrade_packs[pack .. "_items"]
 
+	local needs_update = false
 	local inv = player:get_inventory()
 	local list = inv:get_list("ugpacks")
 	for i, stack in pairs(list) do
 		if lookup[stack:get_name()] then
 			assert(stack:add_wear(amount), "Wear out impossible: "
 				.. stack:get_name())
+			-- Trigger an update if it wore out
+			if stack:is_empty() then
+				needs_update = true
+			end
 		end
 	end
 	inv:set_list("ugpacks", list)
+	if needs_update then
+		upgrade_packs.update_player(player)
+	end
 end
 
 function upgrade_packs.register_pack(name, pack, pack_def)
