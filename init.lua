@@ -55,17 +55,17 @@ minetest.register_on_item_eat(function(hp_change, replace_with_item, itemstack, 
 		return
 	end
 	-- Undo some of the wear when eating instead of dying
-	upgrade_packs.add_wear(user, "health", hp_change * -2)
+	upgrade_packs.add_wear(user, "health", hp_change * -100)
 end)
 
 minetest.register_on_player_hpchange(function(player, hp_change, reason)
 	if hp_change >= 0 then
 		return hp_change
 	end
-	if reason == "drown" then
-		upgrade_packs.add_wear(player, "breath", 400)
+	if reason.type == "drown" then
+		upgrade_packs.add_wear(player, "breath", hp_change * -2000)
 	else
-		upgrade_packs.add_wear(player, "health", hp_change * -25)
+		upgrade_packs.add_wear(player, "health", hp_change * -200)
 	end
 
 	return hp_change
